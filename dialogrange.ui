@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogRange</class>
+ <widget class="QDialog" name="DialogRange">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Global Coordinate Setup</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>990</x>
+     <y>670</y>
+     <width>181</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QLabelClick" name="imgLabel">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>960</width>
+     <height>680</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Picture</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>980</x>
+     <y>40</y>
+     <width>201</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Camera</string>
+   </property>
+   <widget class="QPushButton" name="ccBut">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>181</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Calibrate Camera</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="lcpBut">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>181</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load Camera Param</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="scpBut">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>181</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save Camera Param</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>980</x>
+     <y>230</y>
+     <width>201</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Ground Plane</string>
+   </property>
+   <widget class="QPushButton" name="fmBut">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>181</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>From Image</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="fcBut">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>181</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>From Camera</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="lgpBut">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>181</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load Ground Param</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sgpBut">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>180</y>
+      <width>181</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save Ground Param</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>980</x>
+     <y>470</y>
+     <width>201</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Setting</string>
+   </property>
+   <widget class="QPushButton" name="sspBut">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>181</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save Setting Param</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lspTxt">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>181</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="lspBut">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>181</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load Setting Param</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="statusLb">
+   <property name="geometry">
+    <rect>
+     <x>980</x>
+     <y>10</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Status :</string>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QLabelClick</class>
+   <extends>QLabel</extends>
+   <header location="global">qlabelclick.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>DialogRange</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>DialogRange</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

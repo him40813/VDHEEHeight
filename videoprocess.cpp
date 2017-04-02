@@ -9,7 +9,7 @@ videoProcess::videoProcess(Ui::MainWindow *m,cv::VideoCapture v)
     cout=m->cout->text().toInt();
     testType=-1;
     human=false;
-
+    hfinished=true;
     setupRange=false;
 
     if (m->cbTC->isChecked()){
@@ -65,12 +65,22 @@ int videoProcess::base(){
 
     if (n==0 && setupRange==false){
     //http://stackoverflow.com/questions/11543298/qt-opencv-displaying-images-on-qlabel
+        hp->inputT=realFrame.clone();
+        hp->fnumberT=n;
+
 
         dr.show();
         dr.setImageMat(realFrame,vid,gp,&p);
-        hp->heightBase(realFrame,n);
+
         p=true;
     }
+
+    if (n>0){
+        hp->start();
+    }
+
+
+
 
     int allBFMN=m->bff->text().toInt()+m->bgf->text().toInt();
     if (n<allBFMN){
@@ -83,8 +93,21 @@ int videoProcess::base(){
     }
 
 //core System-----------------------------------------------------------------------------
-    hp->heightBase(realFrame,n);
-    std::cout<<tools::num2str(n).toStdString()<<std::endl;
+    hp->inputT=realFrame.clone();
+    hp->fnumberT=n;
+
+    if (hp->resultT!=-1){
+        d->drawHeight(hp->tpT,hp->resultT);
+    }
+
+    //if(n%10==0 && n>1){
+        //hp->finished=false;
+        //hp->start();
+        //std::cout<<tools::int2str(n)+"t3:"+tools::num2str(hp->resultT).toStdString()<<std::endl;
+        //hp->heightBase(realFrame,n,gp);
+        //future = QtConcurrent::run(std::addressof(*hp), &HeightProcess::heightBase,realFrame,n,gp);
+
+    //}
     b->add(curr,n,human);
     FF=tools::key2Mat(curr,h,w);
     FF=b->getForeground(FF);
@@ -158,11 +181,17 @@ int videoProcess::base(){
 //    if (n==1609 || n==933){
 //        p=true;
 //    }
+
+//    if (n%10==5 && n>5){
+//        std::cout<<tools::int2str(n)+"t3:"+tools::num2str(future.result()).toStdString()<<std::endl;
+//    }
+
     n++;
     //release mat
     frame.release();
     realFrame.release();
     FF.release();
+
 }
 
 //Main Loop Function-------------------------------------------------------------------------------------------------------------------
@@ -175,6 +204,7 @@ void videoProcess::process()
     //init parameter
     w=vid.get(CV_CAP_PROP_FRAME_WIDTH);
     h=vid.get(CV_CAP_PROP_FRAME_HEIGHT);
+    int numf=h=vid.get(CV_CAP_PROP_FRAME_COUNT);
     human=false;
     FF=cv::Mat(h,w,CV_8UC1,cv::Scalar(0));
 
@@ -200,7 +230,9 @@ void videoProcess::process()
 
     b=new BFM(h,w,m->bgf->text().toInt(),m->bff->text().toInt(),d);
     //ffm=new FFM(d,m->r->text().toInt(),m->d->text().toInt(),cout,gp);
+    //thread
     hp=new HeightProcess(gp);
+    hp->numfT=numf;
 
 //    testType=7;
     //define test value

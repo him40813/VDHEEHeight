@@ -117,7 +117,7 @@ class SJN_MultiCueBGS : public IBGS
 {
 private:
   bool firstTime;
-  bool showOutput;
+  bool showOutput=false;
   void saveConfig();
   void loadConfig();
 

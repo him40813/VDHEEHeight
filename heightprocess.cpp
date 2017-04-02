@@ -1,5 +1,17 @@
 #include "heightprocess.h"
 
+HeightProcess::HeightProcess()
+{
+    bgs = new SJN_MultiCueBGS;
+    heightHis=vector<int>();
+    roiChecker=imread("106-109_ROI.png",CV_LOAD_IMAGE_GRAYSCALE);
+    cv::cvtColor(roiChecker, roiColor, cv::COLOR_GRAY2BGR);
+    fnumberT=0;
+    finished=true;
+    numfT=1;
+    tpT=Point(0,0);
+}
+
 HeightProcess::HeightProcess(cv::Ptr<GroundPlane> gp)
 {
     this->gp=gp;
@@ -7,9 +19,13 @@ HeightProcess::HeightProcess(cv::Ptr<GroundPlane> gp)
     heightHis=vector<int>();
     roiChecker=imread("106-109_ROI.png",CV_LOAD_IMAGE_GRAYSCALE);
     cv::cvtColor(roiChecker, roiColor, cv::COLOR_GRAY2BGR);
+    fnumberT=0;
+    finished=true;
+    numfT=1;
+    tpT=Point(0,0);
 }
 
-double HeightProcess::heightBase(Mat frame,int fnumber){
+double HeightProcess::heightBase(Mat frame,int fnumber,cv::Ptr<GroundPlane> gp){
 
 
 
@@ -21,6 +37,7 @@ double HeightProcess::heightBase(Mat frame,int fnumber){
     cv::cvtColor(frame,input,CV_BGR2GRAY);
 
     bgs->process(frame,output,output_bkgmodel);
+
     vector<vector<Point> > contours;
     vector<vector<Point> > contoursDes;
     vector<Vec4i> hierarchy;
@@ -183,7 +200,8 @@ double HeightProcess::heightBase(Mat frame,int fnumber){
                }
 
             if(heightHis.size()>10) {
-                cout<<HDPAV<<endl;
+                //cout<<HDPAV<<endl;
+                tpT=nTopV2;
                 return HDPAV;
             }
             else{
@@ -217,14 +235,14 @@ int HeightProcess::calPeakBin(vector<int> heightHis,double percentage)
             int hIndex=distance(tempHeight.begin(),found);
             ++tempNum.at(hIndex);
             //cout<<thisHeight<<" : "<<tempHeight.at(hIndex)<<endl;
-             cout<<"thisHeight1"<<tempNum.at(hIndex)<<endl;
+             //cout<<"thisHeight1"<<tempNum.at(hIndex)<<endl;
         }else {
             tempHeight.push_back(thisHeight);
             tempNum.push_back(1);
-            cout<<"thisHeight1"<<tempHeight.at(0)<<endl;
+            //cout<<"thisHeight1"<<tempHeight.at(0)<<endl;
         }
     }
-    cout<<"1"<<endl;
+    //cout<<"1"<<endl;
 
     //find peak bin
     std::vector<int>::iterator maxNum=max_element(tempNum.begin(),tempNum.end());
@@ -256,12 +274,12 @@ int HeightProcess::calPeakBin(vector<int> heightHis,double percentage)
         //cout<<"maxNumInd : "<<maxNumIndex<<" : "<<tempHeight.at(maxNumIndex)<<endl;
     }
 
-    cout<<"2"<<endl;
+    //cout<<"2"<<endl;
     //main loop for opt
     int leftShift=1;
     int rightShift=1;
     vector<int> resultNum(tempNum.size(),0);
-    cout<<tempNum.size()<<" : "<<resultNum.size()<<endl;
+    //cout<<tempNum.size()<<" : "<<resultNum.size()<<endl;
     //install max num
     resultNum.at(maxNumIndex)=tempNum.at(maxNumIndex);
     while(remainNumber>0){
@@ -291,23 +309,36 @@ int HeightProcess::calPeakBin(vector<int> heightHis,double percentage)
         }
 
     }
-    cout<<"3"<<endl;
+    //cout<<"3"<<endl;
     int allVal=0;
     int allNum=0;
     for (int wi=0;wi<resultNum.size();++wi){
-        cout<<wi<<","<<resultNum.size()<<endl;
+        //cout<<wi<<","<<resultNum.size()<<endl;
         int tempNum=resultNum.at(wi);
-        cout<<tempNum<<endl;
+        //cout<<tempNum<<endl;
         if (tempNum>0){
             allVal+=tempNum*tempHeight.at(wi);
             allNum+=tempNum;
         }
-        cout<<allVal<<","<<allNum<<endl;
+        //cout<<allVal<<","<<allNum<<endl;
     }
 
-    cout<<"average : "<<allVal/allNum<<endl;
+    //cout<<"average : "<<allVal/allNum<<endl;
 
     return allVal/allNum;
+
+}
+
+void HeightProcess::run(){
+
+    while(1){
+        mutex.lock();
+        resultT=heightBase(inputT,fnumberT,gp);
+        //msleep(1);
+        mutex.unlock();
+
+    }
+
 
 }
 

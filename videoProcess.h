@@ -1,16 +1,18 @@
 #ifndef VIDEOPROCESS_H
 #define VIDEOPROCESS_H
 
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
-#include <string>
+#include <opencv2/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/features2d/features2d.hpp>
+#include <exLib/package_bgs/sjn/SJN_MultiCueBGS.h>
 #include <iostream>
 #include "bfm.h"
 #include "tools.h"
 #include "ui_mainwindow.h"
-#include <opencv2/features2d.hpp>
+#include <QtConcurrent/QtConcurrent>
+#include <QThread>
 #include <time.h>
 #include <display.h>
 #include "ffm.h"
@@ -21,9 +23,15 @@
 #include <fstream>
 #include <QObject>
 #include <QStringList>
-#include <exLib/package_bgs/sjn/SJN_MultiCueBGS.h>
 
 
+#include <vector>
+#include <algorithm>
+#include <QThread>
+
+
+using namespace cv;
+using namespace std;
 
 class videoProcess
 {
@@ -43,7 +51,7 @@ public:
     void saveMatToCsvDouble(const Mat &matrix,const string filename);
     bool endOfVid;
 
-    Mat output,output_bkgmodel;
+
 
 protected:
     cv::VideoCapture vid;
@@ -73,6 +81,14 @@ private:
     int n;//number of frame
     int cin,cout;
     int testType;
+    bool hfinished;
+    QFuture<double> future;
+    HeightProcess hhhp;
+    double heightCal();
+
+
+    // height trans
+
 };
 
 #endif // VIDEOPROCESS_H

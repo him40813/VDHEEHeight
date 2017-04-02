@@ -19,6 +19,7 @@ public:
     void drawLine(std::vector<cv::KeyPoint> start,std::vector<cv::KeyPoint> curr,cv::Ptr<GroundPlane> gp,bool check);
     void drawLineTempCurr(std::vector<std::vector<cv::KeyPoint> > tempCurr,std::vector<cv::KeyPoint> start,bool check);
     void drawEntry(int hNum,std::vector<cv::KeyPoint> start,std::vector<cv::KeyPoint> curr,bool human,bool check);
+    void drawHeight(cv::Point point,double h);
     void showIm();
 
     //Setter

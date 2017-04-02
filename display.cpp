@@ -212,6 +212,11 @@ void display::drawEntry(int hNum,std::vector<cv::KeyPoint> start,std::vector<cv:
     }
 }
 
+void display::drawHeight(cv::Point point,double h){
+    putText(im, tools::int2str(h)+" cm", point,
+        CV_FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(0,255,255), 1, CV_AA);
+}
+
 void display::showIm(){
     if (!im.empty() && !nonShow)
     {
